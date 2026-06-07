@@ -38,7 +38,7 @@ export function Footer() {
         </div>
 
         <div className="mt-8 flex flex-col items-center gap-3 border-t border-gray-700 pt-6 text-center text-xs text-gray-500">
-          <Link href="/admin/login" className="flex items-center gap-1 text-gray-500 hover:text-primary-light transition-colors">
+          <Link href="/login" className="flex items-center gap-1 text-gray-500 hover:text-primary-light transition-colors">
             <Lock className="h-3 w-3" /> Administración
           </Link>
           <p>© {new Date().getFullYear()} Iglesia Espíritu Santo Fuego. Todos los derechos reservados.</p>

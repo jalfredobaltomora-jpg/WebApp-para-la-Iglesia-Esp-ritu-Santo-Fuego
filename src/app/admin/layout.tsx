@@ -25,16 +25,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   useEffect(() => {
     const stored = localStorage.getItem('iesfuego-admin')
     if (stored === 'true') setAuthed(true)
-    else router.replace('/admin/login')
+    else router.replace('/login')
     setLoading(false)
   }, [router])
 
   const handleLogout = () => {
     localStorage.removeItem('iesfuego-admin')
-    router.push('/admin/login')
+    router.push('/login')
   }
 
-  if (pathname === '/admin/login') return <>{children}</>
+  if (pathname === '/login') return <>{children}</>
   if (loading) return <div className="flex min-h-screen items-center justify-center"><div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" /></div>
   if (!authed) return null
 

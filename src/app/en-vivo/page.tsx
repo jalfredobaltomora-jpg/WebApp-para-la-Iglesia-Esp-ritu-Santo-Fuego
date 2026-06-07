@@ -1,10 +1,31 @@
-import { Flame, Youtube, Tv } from 'lucide-react'
+'use client'
+
+import { useState, useEffect } from 'react'
+import { Flame, Youtube, Tv, Wifi, WifiOff } from 'lucide-react'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 
+const STORAGE_KEY = 'iesfuego-live-settings'
+
 export default function EnVivoPage() {
+  const [channelId, setChannelId] = useState('')
+  const [activo, setActivo] = useState(false)
+  const [mensaje, setMensaje] = useState('')
+
+  useEffect(() => {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    if (stored) {
+      try {
+        const data = JSON.parse(stored)
+        setChannelId(data.channelId || '')
+        setActivo(data.activo || false)
+        setMensaje(data.mensaje || '')
+      } catch {}
+    }
+  }, [])
+
   return (
     <>
       <Header />
@@ -15,49 +36,50 @@ export default function EnVivoPage() {
           <p className="mt-2 text-gray-600">Transmisiones en vivo de nuestros cultos</p>
         </div>
 
-        <Card className="mb-8">
-          <CardContent className="p-6 text-center">
-            <div className="mx-auto mb-6 flex h-48 w-full max-w-xl items-center justify-center rounded-xl bg-dark/5">
-              <div className="text-center">
-                <Youtube className="mx-auto mb-3 h-16 w-16 text-primary/60" />
-                <p className="text-sm text-gray-500">
-                  No hay transmisión en vivo en este momento
-                </p>
-                <p className="mt-1 text-xs text-gray-400">
-                  Los cultos en vivo se transmiten los Domingos 10:00 AM y Miércoles 7:00 PM
-                </p>
-              </div>
+        {activo && channelId ? (
+          <Card className="mb-8 overflow-hidden">
+            <div className="flex items-center gap-2 bg-red-500 px-4 py-2 text-white">
+              <div className="h-2 w-2 animate-pulse rounded-full bg-white" />
+              <span className="text-sm font-semibold">EN VIVO</span>
+              <Wifi className="ml-auto h-4 w-4" />
             </div>
-            <a
-              href="https://www.youtube.com/@IglesiaEspirituSantoFuego"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button variant="primary" size="lg">
-                <Youtube className="mr-2 h-5 w-5" /> Ir a YouTube
-              </Button>
-            </a>
-          </CardContent>
-        </Card>
+            <div className="aspect-video w-full">
+              <iframe
+                src={`https://www.youtube.com/embed/live_stream?channel=${channelId}&autoplay=1`}
+                className="h-full w-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </Card>
+        ) : (
+          <Card className="mb-8">
+            <CardContent className="p-6 text-center">
+              <div className="mx-auto mb-6 flex h-48 w-full max-w-xl items-center justify-center rounded-xl bg-dark/5">
+                <div className="text-center">
+                  <WifiOff className="mx-auto mb-3 h-16 w-16 text-primary/60" />
+                  <p className="text-sm text-gray-500">
+                    No hay transmisión en vivo en este momento
+                  </p>
+                  {mensaje && (
+                    <p className="mt-2 text-xs text-gray-400">{mensaje}</p>
+                  )}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
-        {/* Videos recientes placeholder */}
-        <div>
-          <h2 className="mb-4 flex items-center gap-2 text-xl font-bold text-dark">
-            <Tv className="h-5 w-5 text-primary" /> Videos Recientes
-          </h2>
-          <div className="grid gap-4 md:grid-cols-2">
-            {[1, 2].map((i) => (
-              <Card key={i}>
-                <CardContent className="p-4">
-                  <div className="mb-3 flex h-40 items-center justify-center rounded-lg bg-dark/5">
-                    <Youtube className="h-10 w-10 text-gray-300" />
-                  </div>
-                  <h3 className="font-semibold text-dark">Culto - Próximamente</h3>
-                  <p className="text-xs text-gray-500">Fecha por confirmar</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+        <div className="text-center">
+          <a
+            href={channelId ? `https://www.youtube.com/channel/${channelId}/live` : '#'}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button variant="primary" size="lg">
+              <Youtube className="mr-2 h-5 w-5" /> Ir a YouTube
+            </Button>
+          </a>
         </div>
       </main>
       <Footer />

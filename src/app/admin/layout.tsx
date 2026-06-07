@@ -5,13 +5,14 @@ import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
 import {
   LayoutDashboard, CalendarDays, Tv, DollarSign, LogOut,
-  Church, Menu, X,
+  Church, Menu, X, Wifi,
 } from 'lucide-react'
 
 const navItems = [
   { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/actividades', label: 'Actividades', icon: CalendarDays },
   { href: '/admin/cultos', label: 'Cultos', icon: Tv },
+  { href: '/admin/en-vivo', label: 'En Vivo', icon: Wifi },
   { href: '/admin/caja', label: 'Caja', icon: DollarSign },
 ]
 

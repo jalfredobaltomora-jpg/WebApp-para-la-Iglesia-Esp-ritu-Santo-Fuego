@@ -15,10 +15,13 @@ export default function HomePage() {
           </div>
           <div className="relative mx-auto max-w-3xl px-4">
             <Flame className="mx-auto mb-6 h-16 w-16 text-primary-light animate-pulse" />
-            <h1 className="mb-4 text-4xl font-bold leading-tight md:text-5xl">
+            <h1 className="mb-2 text-4xl font-bold leading-tight md:text-5xl">
               Iglesia Espíritu Santo{' '}
-              <span className="text-primary-light">Fuego</span>
+              <span className="text-primary-light">y Fuego</span>
             </h1>
+            <p className="mb-2 text-sm text-gray-400">
+              Misión Cristiana Perfectos en Unidad
+            </p>
             <p className="mb-8 text-lg text-gray-300">
               Transformando vidas con el poder del Espíritu Santo
             </p>

@@ -22,6 +22,7 @@ export interface MovimientoCaja {
   concepto: string
   fecha: string
   ingresadoPor: string
+  aprobadoPor?: string
   descripcion?: string
   fotoFactura?: string
   firmaTesorera?: string

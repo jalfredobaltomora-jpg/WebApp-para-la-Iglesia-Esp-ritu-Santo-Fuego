@@ -6,7 +6,8 @@ import { ArrowLeft, Save, Camera, User } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { CATEGORIAS_INGRESO } from '@/types'
+import { CATEGORIAS_INGRESO, MovimientoCaja } from '@/types'
+import { saveMovimiento } from '@/lib/caja-storage'
 
 export default function NuevoIngresoPage() {
   const router = useRouter()
@@ -32,7 +33,20 @@ export default function NuevoIngresoPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (ingresadoPor) localStorage.setItem('iesfuego-user', ingresadoPor)
-    // TODO: save to Firebase
+    const movimiento: MovimientoCaja = {
+      id: Date.now().toString(),
+      tipo: 'ingreso',
+      categoria,
+      monto: parseFloat(monto),
+      concepto,
+      fecha,
+      ingresadoPor,
+      descripcion,
+      fotoFactura,
+      firmaTesorera,
+      creadoEn: Date.now(),
+    }
+    saveMovimiento(movimiento)
     router.push('/admin/caja')
   }
 
